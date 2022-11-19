@@ -4,7 +4,7 @@ import { useState } from "react";
 import AnsButton from "../components/AnsButton";
 import Question from "../components/Question";
 import styles from "../styles/Home.module.css";
-import { randomIntFromInterval } from "../util";
+import { generateQuestions, Question as Q } from "../util";
 
 /*
 ##### PLUS #####
@@ -32,26 +32,18 @@ import { randomIntFromInterval } from "../util";
 9: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 10: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
 */
-
-type Question = {
-  a: number;
-  b: number;
-  sign: "-" | "+";
-  correctAnswer: number;
-};
 type Props = {
-  numbers: Question[];
+  numbers: Q[];
 };
 const Home: NextPage<Props> = ({ numbers }) => {
+  const [listMode, setListMode] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState<number[]>([]);
+  const [answers, setAnswers] = useState([]);
 
   const currentQuestion = numbers[index];
   const possibleAnswers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
   const handleAnswer = (ans: number) => {
-    console.log("answer: ", ans);
-    console.log("correct answer is: ", currentQuestion.correctAnswer);
     if (ans === currentQuestion.correctAnswer) {
       setAnswers((prev) => [...prev, ans]);
       setIndex((prev) => prev + 1);
@@ -67,23 +59,71 @@ const Home: NextPage<Props> = ({ numbers }) => {
       </Head>
 
       <main className={styles.main}>
-        <Question
-          {...{
-            a: currentQuestion.a,
-            b: currentQuestion.b,
-            sign: currentQuestion.sign,
-          }}
-        />
-
-        <div style={{ maxWidth: "450px", marginTop: "40px" }}>
-          {possibleAnswers.map((ans) => (
-            <AnsButton
-              key={ans}
-              title={ans}
-              onClick={() => handleAnswer(ans)}
-            />
-          ))}
+        <div style={{ marginBottom: "4rem" }}>
+          <button
+            onClick={() => setListMode(true)}
+            style={{
+              backgroundColor: "purple",
+              borderRadius: "8px",
+              height: "50px",
+              marginRight: "16px",
+              width: "120px",
+            }}
+            type="button"
+          >
+            list mode
+          </button>
+          <button
+            onClick={() => setListMode(false)}
+            style={{
+              backgroundColor: "purple",
+              borderRadius: "8px",
+              height: "50px",
+              width: "120px",
+            }}
+            type="button"
+          >
+            test mode
+          </button>
         </div>
+
+        {listMode ? (
+          <div>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                flexWrap: "wrap",
+                height: "80vh",
+                width: "80vw",
+              }}
+            >
+              {numbers.map(({ a, b, sign }) => (
+                <Question key={a + b} {...{ a, b, sign }} />
+              ))}
+            </div>
+          </div>
+        ) : (
+          <div>
+            <Question
+              {...{
+                a: currentQuestion.a,
+                b: currentQuestion.b,
+                sign: currentQuestion.sign,
+              }}
+            />
+
+            <div style={{ maxWidth: "450px", marginTop: "40px" }}>
+              {possibleAnswers.map((ans) => (
+                <AnsButton
+                  key={ans}
+                  title={ans}
+                  onClick={() => handleAnswer(ans)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );
@@ -91,28 +131,8 @@ const Home: NextPage<Props> = ({ numbers }) => {
 
 export default Home;
 
-export const getStaticProps = async () => {
-  const nbrOfQuestions = 90;
-  const numbers = [];
-
-  for (let i = 0; i < nbrOfQuestions; i++) {
-    console.log("generating new number");
-    const randomNumber = Math.random();
-
-    if (randomNumber >= 0.5) {
-      console.log("plus number");
-      const a = randomIntFromInterval(0, 10);
-      const b = randomIntFromInterval(0, 10 - a);
-      const correctAnswer = a + b;
-      numbers.push({ a, b, sign: "+", correctAnswer });
-    } else {
-      console.log("minus number");
-      const a = randomIntFromInterval(0, 10);
-      const b = randomIntFromInterval(0, a);
-      const correctAnswer = a - b;
-      numbers.push({ a, b, sign: "-", correctAnswer });
-    }
-  }
+export const getServerSideProps = () => {
+  const numbers = generateQuestions(90, 10);
 
   return {
     props: {
