@@ -5,7 +5,9 @@ type Props = {
 };
 const Question: React.FC<Props> = ({ a, b, sign }) => (
   <div style={{ alignItems: "center", display: "flex", flexDirection: "row" }}>
-    <h1>{`${a}${sign}${b}=`}</h1>
+    <h1
+      style={{ marginLeft: "8px", marginRight: "8px" }}
+    >{`${a} ${sign} ${b} =`}</h1>
   </div>
 );
 
