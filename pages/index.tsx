@@ -1,63 +1,10 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useState } from "react";
-import AnsButton from "../components/AnsButton";
-import Question from "../components/Question";
+import Link from "next/link";
 import styles from "../styles/Home.module.css";
-import { randomIntFromInterval } from "../util";
 
-/*
-##### PLUS #####
-0: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-1: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-2: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-3: [0, 1, 2, 3, 4, 5, 6, 7]
-4: [0, 1, 2, 3, 4, 5, 6]
-5: [0, 1, 2, 3, 4, 5]
-6: [0, 1, 2, 3, 4]
-7: [0, 1, 2, 3]
-8: [0, 1, 2]
-9: [0, 1]
-10: [0]
-##### MINUS #####
-0: [0]
-1: [0, 1]
-2: [0, 1, 2]
-3: [0, 1, 2, 3]
-4: [0, 1, 2, 3, 4]
-5: [0, 1, 2, 3, 4, 5]
-6: [0, 1, 2, 3, 4, 5, 6]
-7: [0, 1, 2, 3, 4, 5, 6, 7]
-8: [0, 1, 2, 3, 4, 5, 6, 7, 8]
-9: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-10: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-*/
-
-type Question = {
-  a: number;
-  b: number;
-  sign: "-" | "+";
-  correctAnswer: number;
-};
-type Props = {
-  numbers: Question[];
-};
-const Home: NextPage<Props> = ({ numbers }) => {
-  const [index, setIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState<number[]>([]);
-
-  const currentQuestion = numbers[index];
-  const possibleAnswers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  const handleAnswer = (ans: number) => {
-    console.log("answer: ", ans);
-    console.log("correct answer is: ", currentQuestion.correctAnswer);
-    if (ans === currentQuestion.correctAnswer) {
-      setAnswers((prev) => [...prev, ans]);
-      setIndex((prev) => prev + 1);
-    }
-  };
-
+type Props = {};
+const Home: NextPage<Props> = () => {
   return (
     <div className={styles.container}>
       <Head>
@@ -67,56 +14,34 @@ const Home: NextPage<Props> = ({ numbers }) => {
       </Head>
 
       <main className={styles.main}>
-        <Question
-          {...{
-            a: currentQuestion.a,
-            b: currentQuestion.b,
-            sign: currentQuestion.sign,
-          }}
-        />
-
-        <div style={{ maxWidth: "450px", marginTop: "40px" }}>
-          {possibleAnswers.map((ans) => (
-            <AnsButton
-              key={ans}
-              title={ans}
-              onClick={() => handleAnswer(ans)}
-            />
-          ))}
-        </div>
+        <Link href="/under10">
+          <button
+            style={{
+              height: "50px",
+              width: "200px",
+              backgroundColor: "purple",
+              borderRadius: "8px",
+              marginBottom: "4rem",
+            }}
+          >
+            under 10
+          </button>
+        </Link>
+        <Link href="/under20">
+          <button
+            style={{
+              height: "50px",
+              width: "200px",
+              backgroundColor: "purple",
+              borderRadius: "8px",
+            }}
+          >
+            under 20
+          </button>
+        </Link>
       </main>
     </div>
   );
 };
 
 export default Home;
-
-export const getStaticProps = async () => {
-  const nbrOfQuestions = 90;
-  const numbers = [];
-
-  for (let i = 0; i < nbrOfQuestions; i++) {
-    console.log("generating new number");
-    const randomNumber = Math.random();
-
-    if (randomNumber >= 0.5) {
-      console.log("plus number");
-      const a = randomIntFromInterval(0, 10);
-      const b = randomIntFromInterval(0, 10 - a);
-      const correctAnswer = a + b;
-      numbers.push({ a, b, sign: "+", correctAnswer });
-    } else {
-      console.log("minus number");
-      const a = randomIntFromInterval(0, 10);
-      const b = randomIntFromInterval(0, a);
-      const correctAnswer = a - b;
-      numbers.push({ a, b, sign: "-", correctAnswer });
-    }
-  }
-
-  return {
-    props: {
-      numbers,
-    },
-  };
-};
