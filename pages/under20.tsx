@@ -12,7 +12,7 @@ type Props = {
 const Under10Page: NextPage<Props> = ({ numbers }) => {
   const [listMode, setListMode] = useState<boolean>(false);
   const [index, setIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState([]);
+  const [answers, setAnswers] = useState<number[]>([]);
 
   const currentQuestion = numbers[index];
   const possibleAnswers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
