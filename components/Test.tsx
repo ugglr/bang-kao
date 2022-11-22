@@ -72,7 +72,7 @@ const Test: React.FC<Props> = ({ questions }) => {
           backgroundColor: "",
           display: "flex",
           justifyContent: "space-between",
-          width: "300px",
+          width: "256px",
         }}
       >
         <Timer active={timerActive} />
