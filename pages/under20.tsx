@@ -3,27 +3,14 @@ import Head from "next/head";
 import { useState } from "react";
 import AnsButton from "../components/AnsButton";
 import Question from "../components/Question";
+import Test from "../components/Test";
 import styles from "../styles/Home.module.css";
 import { generateQuestions, Question as Q } from "../util";
 
 type Props = {
-  numbers: Q[];
+  questions: Q[];
 };
-const Under10Page: NextPage<Props> = ({ numbers }) => {
-  const [listMode, setListMode] = useState<boolean>(false);
-  const [index, setIndex] = useState<number>(0);
-  const [answers, setAnswers] = useState<number[]>([]);
-
-  const currentQuestion = numbers[index];
-  const possibleAnswers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-  const handleAnswer = (ans: number) => {
-    if (ans === currentQuestion.correctAnswer) {
-      setAnswers((prev) => [...prev, ans]);
-      setIndex((prev) => prev + 1);
-    }
-  };
-
+const Under10Page: NextPage<Props> = ({ questions }) => {
   return (
     <div className={styles.container}>
       <Head>
@@ -33,69 +20,7 @@ const Under10Page: NextPage<Props> = ({ numbers }) => {
       </Head>
 
       <main className={styles.main}>
-        <div style={{ marginBottom: "4rem" }}>
-          <button
-            onClick={() => setListMode(true)}
-            style={{
-              backgroundColor: "purple",
-              borderRadius: "8px",
-              height: "50px",
-              marginRight: "16px",
-              width: "120px",
-            }}
-            type="button"
-          >
-            list mode
-          </button>
-          <button
-            onClick={() => setListMode(false)}
-            style={{
-              backgroundColor: "purple",
-              borderRadius: "8px",
-              height: "50px",
-              width: "120px",
-            }}
-            type="button"
-          >
-            test mode
-          </button>
-        </div>
-
-        {listMode ? (
-          <div>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(7, 1fr)",
-                width: "80vw",
-              }}
-            >
-              {numbers.map(({ a, b, sign }) => (
-                <Question key={a + b} {...{ a, b, sign }} />
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div>
-            <Question
-              {...{
-                a: currentQuestion.a,
-                b: currentQuestion.b,
-                sign: currentQuestion.sign,
-              }}
-            />
-
-            <div style={{ maxWidth: "450px", marginTop: "40px" }}>
-              {possibleAnswers.map((ans) => (
-                <AnsButton
-                  key={ans}
-                  title={ans}
-                  onClick={() => handleAnswer(ans)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
+        <Test {...{ questions }} />
       </main>
     </div>
   );
@@ -104,11 +29,11 @@ const Under10Page: NextPage<Props> = ({ numbers }) => {
 export default Under10Page;
 
 export const getServerSideProps = () => {
-  const numbers = generateQuestions(90, 20);
+  const questions = generateQuestions(90, 20);
 
   return {
     props: {
-      numbers,
+      questions,
     },
   };
 };
