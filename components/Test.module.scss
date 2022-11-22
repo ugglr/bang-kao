@@ -1,0 +1,37 @@
+.container {
+  position: relative;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+.timerContainer {
+  display: flex;
+  justify-content: space-between;
+  width: 256px;
+}
+.resetButton {
+  padding: 4px 8px;
+  border-radius: 8px;
+  background-color: darkblue;
+}
+.inputContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.digitContainer {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+.questionContainer {
+  display: flex;
+  align-items: center;
+}
+.lottieContainer {
+  position: absolute;
+  top: 0;
+  height: 80vh;
+  width: 80vw;
+  pointer-events: none;
+}

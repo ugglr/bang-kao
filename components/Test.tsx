@@ -5,6 +5,20 @@ import Question from "./Question";
 import QuestionsList from "./QuestionsList";
 import Numpad from "./Numpad";
 import Timer from "./Timer";
+import Result from "./Result";
+import Lottie from "react-lottie";
+
+import styles from "./Test.module.scss";
+import confettiLottie from "../public/lotties/confetti.json";
+
+const lottieOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: confettiLottie,
+  rendererSettings: {
+    preserveAspectRatio: "xMidYMid slice",
+  },
+};
 
 export type Answer = {
   answer: number;
@@ -23,7 +37,7 @@ const Test: React.FC<Props> = ({ questions }) => {
   const [answers, setAnswers] = useState<Answer[]>([]);
 
   const currentQuestion = questions[index];
-  const isFinished = index === questions.length - 1;
+  const isFinished = index === questions.length;
 
   const refreshPage = () => {
     window.location.reload();
@@ -58,32 +72,15 @@ const Test: React.FC<Props> = ({ questions }) => {
   };
 
   return (
-    <div
-      style={{
-        alignItems: "center",
-        display: "flex",
-        flexDirection: "column",
-      }}
-    >
+    <div className={styles.container}>
       <ListToggle setListMode={setListMode} />
 
-      <div
-        style={{
-          backgroundColor: "",
-          display: "flex",
-          justifyContent: "space-between",
-          width: "256px",
-        }}
-      >
+      <div className={styles.timerContainer}>
         <Timer active={timerActive} />
         <button
           onClick={refreshPage}
           type="button"
-          style={{
-            padding: "4px 8px",
-            borderRadius: "8px",
-            backgroundColor: "darkblue",
-          }}
+          className={styles.resetButton}
         >
           从新开始
         </button>
@@ -91,22 +88,17 @@ const Test: React.FC<Props> = ({ questions }) => {
 
       {listMode ? (
         <QuestionsList questions={questions} answers={answers} />
+      ) : isFinished ? (
+        <>
+          <Result answers={answers} />
+          <div className={styles.lottieContainer}>
+            <Lottie options={lottieOptions} />
+          </div>
+        </>
       ) : (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              alignItems: "center",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <div style={{ display: "flex", alignItems: "center" }}>
+        <div className={styles.inputContainer}>
+          <div className={styles.digitContainer}>
+            <div className={styles.questionContainer}>
               <Question
                 {...{
                   a: currentQuestion.a,
@@ -122,15 +114,13 @@ const Test: React.FC<Props> = ({ questions }) => {
           </div>
 
           <div style={{ maxWidth: "252px" }}>
-            {isFinished ? null : (
-              <Numpad
-                onDelete={() => {
-                  setAnswerInput(undefined);
-                }}
-                onSubmit={() => handleAnswer()}
-                handleNumber={(nbr) => handleNbr(nbr)}
-              />
-            )}
+            <Numpad
+              onDelete={() => {
+                setAnswerInput(undefined);
+              }}
+              onSubmit={() => handleAnswer()}
+              handleNumber={(nbr) => handleNbr(nbr)}
+            />
           </div>
         </div>
       )}
