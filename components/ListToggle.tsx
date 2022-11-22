@@ -4,7 +4,7 @@ type Props = {
   setListMode: Dispatch<SetStateAction<boolean>>;
 };
 const ListToggle: React.FC<Props> = ({ setListMode }) => (
-  <div style={{ marginBottom: "4rem" }}>
+  <div style={{ marginBottom: "12px" }}>
     <button
       onClick={() => setListMode(true)}
       style={{

@@ -50,7 +50,7 @@ const Test: React.FC<Props> = ({ questions }) => {
 
   const handleNbr = (nbr: number) => {
     const newNbr = parseInt(`${answersInput ?? ""}${nbr}`);
-    if (newNbr >= 10000) {
+    if (newNbr >= 1000) {
       return;
     } else {
       setAnswerInput(newNbr);
@@ -115,7 +115,7 @@ const Test: React.FC<Props> = ({ questions }) => {
             <h2>{error ? "❌" : " "}</h2>
           </div>
 
-          <div style={{ width: "354px" }}>
+          <div style={{}}>
             {isFinished ? null : (
               <Numpad
                 onDelete={() => {
