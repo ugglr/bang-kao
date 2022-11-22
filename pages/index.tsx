@@ -8,8 +8,8 @@ const Home: NextPage<Props> = () => {
   return (
     <div className={styles.container}>
       <Head>
-        <title>Shuxue</title>
-        <meta name="description" content="Shuxue kaoshi" />
+        <title>数学</title>
+        <meta name="description" content="数学考试" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -24,7 +24,7 @@ const Home: NextPage<Props> = () => {
               marginBottom: "4rem",
             }}
           >
-            under 10
+            10以内
           </button>
         </Link>
         <Link href="/under20">
@@ -36,7 +36,7 @@ const Home: NextPage<Props> = () => {
               borderRadius: "8px",
             }}
           >
-            under 20
+            20以内
           </button>
         </Link>
       </main>

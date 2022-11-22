@@ -16,7 +16,7 @@ const ListToggle: React.FC<Props> = ({ setListMode }) => (
       }}
       type="button"
     >
-      list mode
+      单子
     </button>
     <button
       onClick={() => setListMode(false)}
@@ -28,7 +28,7 @@ const ListToggle: React.FC<Props> = ({ setListMode }) => (
       }}
       type="button"
     >
-      test mode
+      考
     </button>
   </div>
 );

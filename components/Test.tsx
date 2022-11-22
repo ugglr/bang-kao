@@ -85,7 +85,7 @@ const Test: React.FC<Props> = ({ questions }) => {
             backgroundColor: "darkblue",
           }}
         >
-          restart
+          从新开始
         </button>
       </div>
 
