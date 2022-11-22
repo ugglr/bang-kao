@@ -1,8 +1,9 @@
 .btn {
   background-color: purple;
   border-radius: 8px;
-  height: 50px;
-  width: 50px;
+  height: 110px;
+  font-size: 1.8rem;
+  width: 110px;
   margin: 4px;
 }
 .btn:hover {
@@ -12,8 +13,9 @@
 .delete {
   background-color: red;
   border-radius: 8px;
-  width: 50px;
-  height: 50px;
+  font-size: 1.8rem;
+  width: 110px;
+  height: 110px;
   margin: 4px;
 }
 .delete:hover {
@@ -23,8 +25,9 @@
 .submit {
   margin: 4px;
   border-radius: 8px;
-  height: 50px;
-  width: 50px;
+  height: 110px;
+  width: 110px;
+  font-size: 1.8rem;
   background-color: green;
 }
 .submit:hover {
