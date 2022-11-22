@@ -92,7 +92,13 @@ const Test: React.FC<Props> = ({ questions }) => {
       {listMode ? (
         <QuestionsList questions={questions} answers={answers} />
       ) : (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
           <div
             style={{
               alignItems: "center",
@@ -115,7 +121,7 @@ const Test: React.FC<Props> = ({ questions }) => {
             <h2>{error ? "❌" : " "}</h2>
           </div>
 
-          <div style={{}}>
+          <div style={{ maxWidth: "252px" }}>
             {isFinished ? null : (
               <Numpad
                 onDelete={() => {
