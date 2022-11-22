@@ -7,12 +7,12 @@ import { generateQuestions, Question as Q } from "../util";
 type Props = {
   questions: Q[];
 };
-const Under10Page: NextPage<Props> = ({ questions }) => {
+const Under30Page: NextPage<Props> = ({ questions }) => {
   return (
     <div className={styles.container}>
       <Head>
         <title>数学</title>
-        <meta name="description" content="练习数学 10 以内" />
+        <meta name="description" content="练习数学 30 以内" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -23,10 +23,10 @@ const Under10Page: NextPage<Props> = ({ questions }) => {
   );
 };
 
-export default Under10Page;
+export default Under30Page;
 
 export const getServerSideProps = () => {
-  const questions = generateQuestions(90, 10);
+  const questions = generateQuestions(90, 30);
 
   return {
     props: {

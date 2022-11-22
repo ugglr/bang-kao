@@ -39,6 +39,18 @@ const Home: NextPage<Props> = () => {
             20以内
           </button>
         </Link>
+        <Link href="/under30">
+          <button
+            style={{
+              height: "50px",
+              width: "200px",
+              backgroundColor: "purple",
+              borderRadius: "8px",
+            }}
+          >
+            30以内
+          </button>
+        </Link>
       </main>
     </div>
   );
